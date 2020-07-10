@@ -23,3 +23,5 @@ npm run dev
     - https://www.youtube.com/watch?v=BhvLIzVL8_o&t=2111s
 2. Git
     - https://www.youtube.com/watch?v=HiXLkL42tMU
+3. TypeScript con Nodejs
+    - https://www.youtube.com/watch?v=qVUr4YC6ZXA
