@@ -1,4 +1,5 @@
 <script>
+    export let image;
     export let title;
     export let content;
 </script>
@@ -6,7 +7,7 @@
 <div class="card">
 
   <!-- Card image -->
-  <img class="card-img-top" src="https://mdbootstrap.com/img/Photos/Others/images/43.jpg" alt="Card image cap">
+  <img class="card-img-top" src={image} alt="Card image cap">
 
   <!-- Card content -->
   <div class="card-body">
