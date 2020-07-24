@@ -1,7 +1,10 @@
 <script>
-	
+  import { pagina } from '../stores/rocamarStore.js';
+  function admin() {
+		pagina.set('admin');
+	}
 </script>
-
+	
 <style>
 
 </style>
@@ -40,7 +43,7 @@
             <a class="nav-link" href="#">Features</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Pricing</a>
+            <a class="nav-link" on:click={admin} href="#">Admin</a>
           </li>
 
           <!-- Dropdown -->
