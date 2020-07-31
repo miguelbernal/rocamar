@@ -9,6 +9,11 @@ class UsuariosController {
         res.json(usuarios.rows)
     }
 
+    public async login(req: Request, res: Response): Promise<void> {
+        const usuarios = await pool.query(`SELECT * FROM usuarios`)
+        res.json(usuarios.rows)
+    }
+
 }
 
 const usuariosController = new UsuariosController

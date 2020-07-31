@@ -20,6 +20,12 @@ class UsuariosController {
             res.json(usuarios.rows);
         });
     }
+    login(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const usuarios = yield database_1.default.query(`SELECT * FROM usuarios`);
+            res.json(usuarios.rows);
+        });
+    }
 }
 const usuariosController = new UsuariosController;
 exports.default = usuariosController;

@@ -6,6 +6,7 @@
 	import Footer from  './components/Footer.svelte'
 	import Admin from  './components/Admin.svelte'
 	import Menu from  './components/Menu.svelte'
+	import Usuarios from  './components/Usuarios.svelte'
 
 	export let pagina_actual = '';
 	
@@ -48,5 +49,9 @@
 	{/if}
 	{#if pagina_actual == 'menu' }
 		<Menu/>
+	{/if}
+	{#if pagina_actual == 'usuarios' }
+		<Menu/>
+		<Usuarios/>
 	{/if}
 </main>
