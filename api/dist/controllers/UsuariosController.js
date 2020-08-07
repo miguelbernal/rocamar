@@ -26,6 +26,19 @@ class UsuariosController {
             res.json(usuarios.rows);
         });
     }
+    add(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const nombre = req.body.nombre_usuario;
+            const usuario = req.body.usuario_usuario;
+            const clave = req.body.clave_usuario;
+            yield database_1.default.query(`
+        INSERT INTO usuarios(nombre_usuario, usuario_usuario, clave_usuario) 
+        VALUES('${nombre}', '${usuario}', '${clave}')
+        `);
+            res.json({ agregado: true });
+        });
+    }
 }
 const usuariosController = new UsuariosController;
 exports.default = usuariosController;
