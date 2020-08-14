@@ -15,12 +15,35 @@
 
   function guardar(){
     if(operacion_actual == 'agregar'){
-      console.log('agregar');
+      console.log('agregar_registro');
+      agregar_registro();
     } else if(operacion_actual == 'editar'){
       console.log('modificar ' + registro_actual.id);
     } else if(operacion_actual == 'eliminar'){
       console.log('eliminar ' + registro_actual.id);
     }
+  }
+
+  async function agregar_registro(){
+    console.log('agregar_registro function');
+    console.log(registro_actual);
+    var url = 'http://localhost:3000/api/usuarios';
+    var data = { 
+                nombre_usuario: registro_actual.nombre,
+                usuario_usuario: registro_actual.usuario,
+                clave_usuario: registro_actual.clave
+               };
+    console.log(JSON.stringify(data));
+    var parametros = {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+    };
+    var datos = await fetch(url, parametros)
+    const json = await datos.json();
+    console.log(json);
   }
   
 </script>
@@ -57,14 +80,14 @@
                   {#if operacion_actual == 'eliminar'}
                     <input type="text" 
                           id="nombre" name="nombre"
-                          value={registro_actual.nombre}
+                          bind:value={registro_actual.nombre}
                           readonly
                           class="form-control form-control-sm">
                   {/if}
                   {#if operacion_actual != 'eliminar'}
                     <input type="text" 
                           id="nombre" name="nombre"
-                          value={registro_actual.nombre}
+                          bind:value={registro_actual.nombre}
                           class="form-control form-control-sm">
                   {/if}  
               </div>
@@ -77,14 +100,14 @@
               {#if operacion_actual == 'eliminar'}
                 <input type="text" 
                        id="usuario" name="usuario"
-                       value={registro_actual.usuario}
+                       bind:value={registro_actual.usuario}
                        readonly
                        class="form-control form-control-sm"> 
               {/if}
               {#if operacion_actual != 'eliminar'}
                 <input type="text" 
                        id="usuario" name="usuario"
-                       value={registro_actual.usuario}
+                       bind:value={registro_actual.usuario}
                        class="form-control form-control-sm"> 
               {/if}
             </div>
@@ -97,14 +120,14 @@
               {#if operacion_actual == 'eliminar'}
                 <input type="password" 
                        id="clave" name="clave"
-                       value={registro_actual.clave}
+                       bind:value={registro_actual.clave}
                        readonly
                        class="form-control form-control-sm"> 
               {/if}
               {#if operacion_actual != 'eliminar'}
                 <input type="password" 
                        id="clave" name="clave"
-                       value={registro_actual.clave}
+                       bind:value={registro_actual.clave}
                        class="form-control form-control-sm"> 
               {/if}
             </div>

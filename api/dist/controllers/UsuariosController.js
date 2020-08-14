@@ -28,15 +28,45 @@ class UsuariosController {
     }
     add(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
+            console.log("req.body");
             console.log(req.body);
-            const nombre = req.body.nombre_usuario;
-            const usuario = req.body.usuario_usuario;
-            const clave = req.body.clave_usuario;
-            yield database_1.default.query(`
+            const result = yield database_1.default.query(`
         INSERT INTO usuarios(nombre_usuario, usuario_usuario, clave_usuario) 
-        VALUES('${nombre}', '${usuario}', '${clave}')
-        `);
-            res.json({ agregado: true });
+        VALUES($1, $2, $3) RETURNING id_usuario`, [req.body.nombre_usuario,
+                req.body.usuario_usuario,
+                req.body.clave_usuario,
+            ]);
+            console.log(result.rows[0].id_usuario);
+            res.json({ agregado: true, id_usuario: result.rows[0].id_usuario });
+        });
+    }
+    update(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const { id_usuario } = req.params;
+            const result = yield database_1.default.query(`
+        UPDATE usuarios SET 
+        nombre_usuario = $1, 
+        usuario_usuario = $2, 
+        clave_usuario = $3 
+        WHERE id_usuario = $4`, [req.body.nombre_usuario,
+                req.body.usuario_usuario,
+                req.body.clave_usuario,
+                id_usuario
+            ]);
+            res.json({ modificado: true });
+        });
+    }
+    delete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body);
+            const { id_usuario } = req.params;
+            const result = yield database_1.default.query(`
+        DELETE FROM usuarios 
+        WHERE id_usuario = $1`, [
+                id_usuario
+            ]);
+            res.json({ eliminado: true });
         });
     }
 }
