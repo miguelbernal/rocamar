@@ -1,9 +1,16 @@
 <script>
   import { operacion } from '../stores/operacionStore.js';
   import { registro } from '../stores/registroStore.js';
+  import { registros } from '../stores/registrosStore.js';
 
   export let operacion_actual = '';
   export let registro_actual = {};
+  registro.set({
+            id: 0,
+            nombre: '',
+            usuario: '',
+            clave: ''
+        });
 	
 	const unsubscribe = operacion.subscribe(value => {
 		operacion_actual = value;
@@ -13,14 +20,25 @@
 		registro_actual = value;
   });
 
+  function refrescar(){
+    fetch('http://localhost:3000/api/usuarios')
+  	.then(response => response.json())
+  	.then(json => {
+		  registros.set(json);
+		  console.log(json);
+          })
+  }
+
   function guardar(){
     if(operacion_actual == 'agregar'){
       console.log('agregar_registro');
       agregar_registro();
     } else if(operacion_actual == 'editar'){
       console.log('modificar ' + registro_actual.id);
+      modificar_registro();
     } else if(operacion_actual == 'eliminar'){
       console.log('eliminar ' + registro_actual.id);
+      eliminar_registro();
     }
   }
 
@@ -44,8 +62,63 @@
     var datos = await fetch(url, parametros)
     const json = await datos.json();
     console.log(json);
+    if(json.agregado){
+      jQuery('#formularioModal').modal('hide');
+      refrescar();
+    }
+  }
+
+  async function modificar_registro(){
+    console.log('modificar_registro function');
+    console.log(registro_actual);
+    var url = 'http://localhost:3000/api/usuarios/'+registro_actual.id;
+    var data = { 
+                nombre_usuario: registro_actual.nombre,
+                usuario_usuario: registro_actual.usuario,
+                clave_usuario: registro_actual.clave
+               };
+    console.log(JSON.stringify(data));
+    var parametros = {
+        method: 'PUT',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+    };
+    var datos = await fetch(url, parametros)
+    const json = await datos.json();
+    console.log(json);
+    if(json.modificado){
+      jQuery('#formularioModal').modal('hide');
+      refrescar();
+    }
   }
   
+  async function eliminar_registro(){
+    console.log('eliminar_registro function');
+    console.log(registro_actual);
+    var url = 'http://localhost:3000/api/usuarios/'+registro_actual.id;
+    var data = { 
+                nombre_usuario: registro_actual.nombre,
+                usuario_usuario: registro_actual.usuario,
+                clave_usuario: registro_actual.clave
+               };
+    console.log(JSON.stringify(data));
+    var parametros = {
+        method: 'DELETE',
+        body: JSON.stringify(data),
+        headers:{
+          'Content-Type': 'application/json'
+        }
+    };
+    var datos = await fetch(url, parametros)
+    const json = await datos.json();
+    console.log(json);
+    if(json.eliminado){
+      jQuery('#formularioModal').modal('hide');
+      refrescar();
+    }
+  }
 </script>
 
 <style>

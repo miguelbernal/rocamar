@@ -2,14 +2,19 @@
     import UsuariosFormulario from "./UsuariosFormulario.svelte";
     import { operacion } from '../stores/operacionStore.js';
     import { registro } from '../stores/registroStore.js';
+    import { registros } from '../stores/registrosStore.js';
     
     let usuarios = []
 	fetch('http://localhost:3000/api/usuarios')
   	.then(response => response.json())
   	.then(json => {
-		  usuarios = json;
+		  registros.set(json);
 		  console.log(json);
           })
+    
+    const unsubscribe = registros.subscribe(value => {
+		usuarios = value;
+    });
     
     function agregar(){
         console.log('agregar');

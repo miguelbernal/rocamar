@@ -15,10 +15,6 @@ app.set('port', 3000);
 app.use(morgan_1.default('dev'));
 app.use(express_1.default.json());
 app.use(express_1.default.urlencoded({ extended: false }));
-app.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', '*');
-    next();
-});
 // routes
 app.use(authRoutes_1.default);
 app.use('/api/usuarios', usuariosRoutes_1.default);

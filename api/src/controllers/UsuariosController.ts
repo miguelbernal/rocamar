@@ -5,7 +5,7 @@ import pool from '../database'
 class UsuariosController {
 
     public async list(req: Request, res: Response): Promise<void> {
-        const usuarios = await pool.query(`SELECT * FROM usuarios`)
+        const usuarios = await pool.query(`SELECT * FROM usuarios ORDER BY id_usuario`)
         res.json(usuarios.rows)
     }
 
